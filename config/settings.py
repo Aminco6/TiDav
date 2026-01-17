@@ -14,7 +14,12 @@ SECRET_KEY = 'django-insecure-ti-dav-secret-key-2024-change-this-in-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://tidav.artclash.com.ng', '127.0.0.1', 'www.tidav.artclash.com.ng', 'tidav.artclash.com.ng']
+ALLOWED_HOSTS = [
+    "tidav.artclash.com.ng",
+    "www.tidav.artclash.com.ng",
+    "127.0.0.1",
+    "localhost",
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -128,9 +133,8 @@ ACTIVATION_EXPIRE_DAYS = 7
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8000',
-    'http://127.0.0.1:8000',
-    'http://0.0.0.0:8000',
+    "https://tidav.artclash.com.ng",
+    "https://www.tidav.artclash.com.ng",
 ]
 
 # Session settings
@@ -138,7 +142,8 @@ SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
 SESSION_SAVE_EVERY_REQUEST = True
 
 
-
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
 
 
 
