@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - TiDav</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0A1F2E;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Animated Background with Grid */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            top: 0;
+            left: 0;
+        }
+
+        .grid-bg {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 157, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 157, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        /* Glowing Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #FF006B 0%, #8000FF 100%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 3s;
+        }
+
+        .orb3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+            top: 50%;
+            left: 50%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(100px, -80px) scale(1.1);
+            }
+            66% {
+                transform: translate(-80px, 100px) scale(0.9);
+            }
+        }
+
+        /* Floating Icons */
+        .floating-icon {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.15;
+            animation: floatIcon 20s infinite ease-in-out;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(180deg);
+            }
+        }
+
+        .icon1 { top: 10%; left: 15%; animation-delay: 0s; }
+        .icon2 { top: 20%; right: 20%; animation-delay: 2s; }
+        .icon3 { bottom: 15%; left: 10%; animation-delay: 4s; }
+        .icon4 { bottom: 25%; right: 15%; animation-delay: 6s; }
+        .icon5 { top: 60%; left: 5%; animation-delay: 8s; }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Signup Container */
+        .signup-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        /* Left Side - Hero Image */
+        .hero-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            animation: pulse 3s infinite ease-in-out;
+            filter: drop-shadow(0 0 50px rgba(0, 255, 157, 0.5));
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .glow-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 157, 0.2) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-text {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .hero-text p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Right Side - Signup Form */
+        .signup-card {
+            flex: 0 0 500px;
+            background: rgba(15, 35, 50, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 45px 40px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.6s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .signup-card::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .signup-card::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .signup-card::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            border-radius: 10px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 50px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-text h2 {
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .welcome-text p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            z-index: 2;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 18px 14px 45px;
+            border: 2px solid rgba(0, 255, 157, 0.2);
+            border-radius: 14px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300FF9D' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+        }
+
+        select option {
+            background: #0A1F2E;
+            color: #fff;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00FF9D;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .password-toggle:hover {
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .strength-weak { 
+            width: 33%; 
+            background: #FF006B;
+        }
+
+        .strength-medium { 
+            width: 66%; 
+            background: #FFD700;
+        }
+
+        .strength-strong { 
+            width: 100%; 
+            background: #00FF9D;
+        }
+
+        .strength-text {
+            margin-top: 5px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .phone-input-group {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 10px;
+        }
+
+        .terms-wrapper {
+            display: flex;
+            align-items: start;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(0, 255, 157, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+        }
+
+        .terms-wrapper input[type="checkbox"] {
+            width: auto;
+            padding: 0;
+            margin: 0;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #00FF9D;
+            min-width: 18px;
+        }
+
+        .terms-wrapper label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            margin: 0;
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            line-height: 1.5;
+        }
+
+        .terms-wrapper a {
+            color: #00FF9D;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms-wrapper a:hover {
+            color: #00B8FF;
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            color: #0A1F2E;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-signup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-signup:hover::before {
+            left: 100%;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 157, 0.5);
+        }
+
+        .btn-signup:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .social-signup {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            padding: 13px;
+            border: 2px solid rgba(0, 255, 157, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #fff;
+        }
+
+        .social-btn:hover {
+            border-color: #00FF9D;
+            background: rgba(0, 255, 157, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.2);
+        }
+
+        .signin-link {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .signin-link a {
+            color: #00FF9D;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .signin-link a:hover {
+            color: #00B8FF;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .signup-wrapper {
+                flex-direction: column;
+                max-width: 550px;
+            }
+
+            .hero-side {
+                order: 2;
+                margin-top: 30px;
+            }
+
+            .hero-text h1 {
+                font-size: 32px;
+            }
+
+            .signup-card {
+                flex: 1;
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .signup-card {
+                padding: 35px 30px;
+                border-radius: 25px;
+                flex: 0 0 auto;
+                width: 100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .social-signup {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 28px;
+            }
+
+            .hero-side {
+                display: none;
+            }
+
+            .phone-input-group {
+                grid-template-columns: 100px 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0;
+            }
+
+            .signup-wrapper {
+                padding: 10px;
+            }
+
+            .signup-card {
+                padding: 30px 20px;
+            }
+
+            .logo-text {
+                font-size: 24px;
+            }
+
+            .welcome-text h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="grid-bg"></div>
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        
+        <!-- Floating Phone Icons -->
+        <div class="floating-icon icon1">📱</div>
+        <div class="floating-icon icon2">📞</div>
+        <div class="floating-icon icon3">💬</div>
+        <div class="floating-icon icon4">🌐</div>
+        <div class="floating-icon icon5">📡</div>
+    </div>
+
+    <!-- Signup Wrapper -->
+    <div class="signup-wrapper">
+        <!-- Left Side - Hero -->
+        <div class="hero-side">
+            <div class="hero-image-container">
+                <div class="glow-circle"></div>
+                <svg class="hero-image" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="phoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00FF9D;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00B8FF;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#0A1F2E;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#143547;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Multiple Phones -->
+                    <rect x="80" y="80" width="120" height="240" rx="15" fill="url(#phoneGrad)" opacity="0.7"/>
+                    <rect x="88" y="95" width="104" height="210" rx="8" fill="url(#screenGrad)"/>
+                    
+                    <rect x="140" y="50" width="120" height="240" rx="15" fill="url(#phoneGrad)" opacity="0.9"/>
+                    <rect x="148" y="65" width="104" height="210" rx="8" fill="url(#screenGrad)"/>
+                    
+                    <rect x="200" y="80" width="120" height="240" rx="15" fill="url(#phoneGrad)" opacity="0.7"/>
+                    <rect x="208" y="95" width="104" height="210" rx="8" fill="url(#screenGrad)"/>
+                    
+                    <!-- Center User Icon -->
+                    <circle cx="200" cy="170" r="50" fill="#00FF9D" opacity="0.2">
+                        <animate attributeName="r" values="50;55;50" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="200" cy="170" r="40" fill="#00FF9D" opacity="0.4"/>
+                    <text x="200" y="190" font-size="50" text-anchor="middle" fill="#fff">👤</text>
+                    
+                    <!-- Connection Lines -->
+                    <line x1="140" y1="170" x2="260" y2="170" stroke="#00FF9D" stroke-width="2" opacity="0.5" stroke-dasharray="5,5">
+                        <animate attributeName="stroke-dashoffset" values="0;10" dur="1s" repeatCount="indefinite"/>
+                    </line>
+                    
+                    <!-- Floating Elements -->
+                    <text x="120" y="120" font-size="20" fill="#00B8FF" opacity="0.8">📧</text>
+                    <text x="280" y="140" font-size="20" fill="#00FF9D" opacity="0.8">📱</text>
+                    <text x="110" y="250" font-size="20" fill="#00FF9D" opacity="0.8">🔒</text>
+                    <text x="290" y="270" font-size="20" fill="#00B8FF" opacity="0.8">✓</text>
+                </svg>
+            </div>
+            <div class="hero-text">
+                <h1>Join TiDav</h1>
+                <p>Create your account and start connecting with premium virtual numbers worldwide.</p>
+            </div>
+        </div>
+
+        <!-- Right Side - Signup Card -->
+        <div class="signup-card">
+            <div class="logo-section">
+                <div class="logo">📱</div>
+                <div class="logo-text">TiDav</div>
+                <div class="logo-subtitle">Premium Numbers</div>
+            </div>
+
+            <div class="welcome-text">
+                <h2>Create Your Account</h2>
+                <p>Get started with your virtual number platform</p>
+            </div>
+            
+            
+            
+            
+
+    
+
+
+
+
+            <form onsubmit="handleSignup(event)">
+              
+                  {% csrf_token %}  <!-- Add this line -->
+              
+    <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="firstName" placeholder="John" required>
+                            <div class="input-icon">👤</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="lastName" placeholder="Doe" required>
+                            <div class="input-icon">👤</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" placeholder="your@email.com" required>
+                        <div class="input-icon">📧</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="phone-input-group">
+                        <div class="input-wrapper">
+                            <select id="countryCode" required>
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+44">🇬🇧 +44</option>
+                                <option value="+91">🇮🇳 +91</option>
+                                <option value="+61">🇦🇺 +61</option>
+                                <option value="+81">🇯🇵 +81</option>
+                                <option value="+86">🇨🇳 +86</option>
+                                <option value="+49">🇩🇪 +49</option>
+                                <option value="+33">🇫🇷 +33</option>
+                                <option value="+39">🇮🇹 +39</option>
+                                <option value="+34">🇪🇸 +34</option>
+                            </select>
+                            <div class="input-icon">🌍</div>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="tel" id="phone" placeholder="123-456-7890" required>
+                            <div class="input-icon">📱</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Country</label>
+                    <div class="input-wrapper">
+                        <select id="country" required>
+                            <option value="">Select your country</option>
+                            <option value="US">🇺🇸 United States</option>
+                            <option value="GB">🇬🇧 United Kingdom</option>
+                            <option value="CA">🇨🇦 Canada</option>
+                            <option value="AU">🇦🇺 Australia</option>
+                            <option value="IN">🇮🇳 India</option>
+                            <option value="JP">🇯🇵 Japan</option>
+                            <option value="CN">🇨🇳 China</option>
+                            <option value="DE">🇩🇪 Germany</option>
+                            <option value="FR">🇫🇷 France</option>
+                            <option value="IT">🇮🇹 Italy</option>
+                            <option value="ES">🇪🇸 Spain</option>
+                            <option value="BR">🇧🇷 Brazil</option>
+                            <option value="MX">🇲🇽 Mexico</option>
+                            <option value="NG">🇳🇬 Nigeria</option>
+                            <option value="ZA">🇿🇦 South Africa</option>
+                        </select>
+                        <div class="input-icon">🌍</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" placeholder="Create a strong password" required oninput="checkPasswordStrength()">
+                        <div class="input-icon">🔒</div>
+                        <div class="password-toggle" onclick="togglePassword('password')">👁️</div>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText">Password strength: None</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+                        <div class="input-icon">🔒</div>
+                        <div class="password-toggle" onclick="togglePassword('confirmPassword')">👁️</div>
+                    </div>
+                </div>
+
+                <div class="terms-wrapper">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand that my information will be used to provide virtual number services.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-signup">Create Account</button>
+    </div>
+</form>
+
+
+            
+            
+ <script>
+ 
+ // Password strength checker
+function checkPasswordStrength() {
+    const password = document.getElementById('password').value;
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthText = document.getElementById('strengthText');
+    
+    if (!password) {
+        strengthBar.className = 'strength-bar';
+        strengthBar.style.width = '0%';
+        strengthText.textContent = 'Password strength: None';
+        return;
+    }
+    
+    // Send request to Django backend
+    fetch('/check-password/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ password: password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update strength bar
+        strengthBar.style.width = data.strength + '%';
+        
+        // Update strength class and text
+        if (data.strength <= 33) {
+            strengthBar.className = 'strength-bar strength-weak';
+            strengthText.textContent = 'Password strength: Weak';
+            strengthText.style.color = '#FF006B';
+        } else if (data.strength <= 66) {
+            strengthBar.className = 'strength-bar strength-medium';
+            strengthText.textContent = 'Password strength: Medium';
+            strengthText.style.color = '#FFD700';
+        } else {
+            strengthBar.className = 'strength-bar strength-strong';
+            strengthText.textContent = 'Password strength: Strong';
+            strengthText.style.color = '#00FF9D';
+        }
+    })
+    .catch(error => {
+        console.error('Error checking password strength:', error);
+    });
+}
+
+// Form submission handler
+function handleSignup(event) {
+    event.preventDefault();
+    
+    // Get form values
+    const formData = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        email: document.getElementById('email').value.trim().toLowerCase(),
+        phone: document.getElementById('phone').value.trim(),
+        countryCode: document.getElementById('countryCode').value,
+        country: document.getElementById('country').value,
+        password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirmPassword').value,
+    };
+    
+    // Validate terms agreement
+    if (!document.getElementById('terms').checked) {
+        alert('❌ Please agree to the Terms of Service and Privacy Policy.');
+        return;
+    }
+    
+    // Disable button and show loading
+    const btn = document.querySelector('.btn-signup');
+    const originalText = btn.textContent;
+    btn.textContent = 'Creating Account...';
+    btn.disabled = true;
+    
+    // Send request to Django backend
+    fetch('/signup/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show success message
+            alert('✅ ' + data.message);
+            
+            // Redirect to activation page
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url;
+            }
+        } else {
+            // Show errors
+            let errorMessage = 'Please fix the following errors:\n\n';
+            for (const field in data.errors) {
+                // Format field name for display
+                const fieldName = field === '__all__' ? 'General' : 
+                                 field === 'firstName' ? 'First Name' :
+                                 field === 'lastName' ? 'Last Name' :
+                                 field === 'confirmPassword' ? 'Confirm Password' :
+                                 field.charAt(0).toUpperCase() + field.slice(1);
+                
+                errorMessage += `• ${fieldName}: ${data.errors[field][0]}\n`;
+            }
+            alert('❌ ' + errorMessage);
+        }
+    })
+    .catch(error => {
+        alert('❌ Network error. Please check your connection and try again.');
+        console.error('Error:', error);
+    })
+    .finally(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+    });
+}
+
+// Real-time email validation
+function checkEmailAvailability() {
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const emailInput = document.getElementById('email');
+    
+    if (!email || email.length < 5) return;
+    
+    fetch(`/check-email/?email=${encodeURIComponent(email)}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.exists) {
+            emailInput.style.borderColor = '#FF006B';
+            emailInput.style.boxShadow = '0 0 10px rgba(255, 0, 107, 0.3)';
+        } else {
+            emailInput.style.borderColor = 'rgba(0, 255, 157, 0.2)';
+            emailInput.style.boxShadow = 'none';
+        }
+    })
+    .catch(error => {
+        console.error('Error checking email:', error);
+    });
+}
+
+// Toggle password visibility
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    const toggle = field.parentElement.querySelector('.password-toggle');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        toggle.textContent = '🙈';
+    } else {
+        field.type = 'password';
+        toggle.textContent = '👁️';
+    }
+}
+
+// Get CSRF token from cookies
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Add event listeners when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Real-time email validation
+    const emailInput = document.getElementById('email');
+    if (emailInput) {
+        emailInput.addEventListener('blur', checkEmailAvailability);
+        emailInput.addEventListener('input', function() {
+            // Reset border color when user starts typing
+            this.style.borderColor = 'rgba(0, 255, 157, 0.2)';
+            this.style.boxShadow = 'none';
+        });
+    }
+    
+    // Real-time password strength check
+    const passwordInput = document.getElementById('password');
+    if (passwordInput) {
+        passwordInput.addEventListener('input', checkPasswordStrength);
+    }
+    
+    // Validate password match
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#FF006B';
+                this.style.boxShadow = '0 0 10px rgba(255, 0, 107, 0.3)';
+            } else if (confirmPassword) {
+                this.style.borderColor = '#00FF9D';
+                this.style.boxShadow = '0 0 10px rgba(0, 255, 157, 0.3)';
+            } else {
+                this.style.borderColor = 'rgba(0, 255, 157, 0.2)';
+                this.style.boxShadow = 'none';
+            }
+        });
+    }
+});
+ </script>
+ 
+ 
+ 
+             <div class="divider
+             
+</html>             
+            

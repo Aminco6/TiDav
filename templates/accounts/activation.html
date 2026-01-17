@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Account - TiDav</title>
+    
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0A1F2E;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Animated Background with Grid */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            top: 0;
+            left: 0;
+        }
+
+        .grid-bg {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 157, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 157, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        /* Glowing Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #FF006B 0%, #8000FF 100%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 3s;
+        }
+
+        .orb3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+            top: 50%;
+            left: 50%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(100px, -80px) scale(1.1);
+            }
+            66% {
+                transform: translate(-80px, 100px) scale(0.9);
+            }
+        }
+
+        /* Floating Icons */
+        .floating-icon {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.15;
+            animation: floatIcon 20s infinite ease-in-out;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(180deg);
+            }
+        }
+
+        .icon1 { top: 10%; left: 15%; animation-delay: 0s; }
+        .icon2 { top: 20%; right: 20%; animation-delay: 2s; }
+        .icon3 { bottom: 15%; left: 10%; animation-delay: 4s; }
+        .icon4 { bottom: 25%; right: 15%; animation-delay: 6s; }
+        .icon5 { top: 60%; left: 5%; animation-delay: 8s; }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Signup Container */
+        .signup-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        /* Left Side - Hero Image */
+        .hero-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            animation: pulse 3s infinite ease-in-out;
+            filter: drop-shadow(0 0 50px rgba(0, 255, 157, 0.5));
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .glow-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 157, 0.2) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-text {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .hero-text p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Right Side - Signup Form */
+        .signup-card {
+            flex: 0 0 500px;
+            background: rgba(15, 35, 50, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 45px 40px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.6s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .signup-card::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .signup-card::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .signup-card::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            border-radius: 10px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 50px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-text h2 {
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .welcome-text p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            z-index: 2;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 18px 14px 45px;
+            border: 2px solid rgba(0, 255, 157, 0.2);
+            border-radius: 14px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300FF9D' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+        }
+
+        select option {
+            background: #0A1F2E;
+            color: #fff;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00FF9D;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .password-toggle:hover {
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .strength-weak { 
+            width: 33%; 
+            background: #FF006B;
+        }
+
+        .strength-medium { 
+            width: 66%; 
+            background: #FFD700;
+        }
+
+        .strength-strong { 
+            width: 100%; 
+            background: #00FF9D;
+        }
+
+        .strength-text {
+            margin-top: 5px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .phone-input-group {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 10px;
+        }
+
+        .terms-wrapper {
+            display: flex;
+            align-items: start;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(0, 255, 157, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+        }
+
+        .terms-wrapper input[type="checkbox"] {
+            width: auto;
+            padding: 0;
+            margin: 0;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #00FF9D;
+            min-width: 18px;
+        }
+
+        .terms-wrapper label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            margin: 0;
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            line-height: 1.5;
+        }
+
+        .terms-wrapper a {
+            color: #00FF9D;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms-wrapper a:hover {
+            color: #00B8FF;
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            color: #0A1F2E;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-signup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-signup:hover::before {
+            left: 100%;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 157, 0.5);
+        }
+
+        .btn-signup:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .social-signup {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            padding: 13px;
+            border: 2px solid rgba(0, 255, 157, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #fff;
+        }
+
+        .social-btn:hover {
+            border-color: #00FF9D;
+            background: rgba(0, 255, 157, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.2);
+        }
+
+        .signin-link {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .signin-link a {
+            color: #00FF9D;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .signin-link a:hover {
+            color: #00B8FF;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .signup-wrapper {
+                flex-direction: column;
+                max-width: 550px;
+            }
+
+            .hero-side {
+                order: 2;
+                margin-top: 30px;
+            }
+
+            .hero-text h1 {
+                font-size: 32px;
+            }
+
+            .signup-card {
+                flex: 1;
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .signup-card {
+                padding: 35px 30px;
+                border-radius: 25px;
+                flex: 0 0 auto;
+                width: 100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .social-signup {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 28px;
+            }
+
+            .hero-side {
+                display: none;
+            }
+
+            .phone-input-group {
+                grid-template-columns: 100px 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 0;
+            }
+
+            .signup-wrapper {
+                padding: 10px;
+            }
+
+            .signup-card {
+                padding: 30px 20px;
+            }
+
+            .logo-text {
+                font-size: 24px;
+            }
+
+            .welcome-text h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+    
+    
+    
+    <style>
+        /* Copy all the CSS styles from your signup page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0A1F2E;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Add all the background animation styles from your signup page */
+        
+        .activation-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .activation-card {
+            background: rgba(15, 35, 50, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 45px 40px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.6s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 50px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-text h2 {
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .welcome-text p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            z-index: 2;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 18px 14px 45px;
+            border: 2px solid rgba(0, 255, 157, 0.2);
+            border-radius: 14px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00FF9D;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+        }
+
+        .message-box {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .message-success {
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            color: #00FF9D;
+        }
+
+        .message-error {
+            background: rgba(255, 0, 107, 0.1);
+            border: 1px solid rgba(255, 0, 107, 0.3);
+            color: #FF006B;
+        }
+
+        .message-info {
+            background: rgba(0, 184, 255, 0.1);
+            border: 1px solid rgba(0, 184, 255, 0.3);
+            color: #00B8FF;
+        }
+
+        .btn-activate {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            color: #0A1F2E;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .btn-activate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 157, 0.5);
+        }
+
+        .btn-activate:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .resend-section {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .resend-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .btn-resend {
+            background: linear-gradient(135deg, #FF006B 0%, #8000FF 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-resend:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 107, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="grid-bg"></div>
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        
+        <!-- Floating Phone Icons -->
+        <div class="floating-icon icon1">📱</div>
+        <div class="floating-icon icon2">📞</div>
+        <div class="floating-icon icon3">💬</div>
+        <div class="floating-icon icon4">🌐</div>
+        <div class="floating-icon icon5">📡</div>
+    </div>
+
+    <!-- Activation Container -->
+    <div class="activation-container">
+        <div class="activation-card">
+            <div class="logo-section">
+                <div class="logo">📱</div>
+                <div class="logo-text">TiDav</div>
+                <div class="logo-subtitle">Premium Numbers</div>
+            </div>
+
+            <div class="welcome-text">
+                <h2>Activate Your Account</h2>
+                <p id="activationEmail">Enter the activation code sent to your email</p>
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <form onsubmit="handleActivation(event)">
+                <div class="form-group">
+                    <label>Activation Code</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="activationCode" 
+                               placeholder="Enter your activation code" required>
+                        <div class="input-icon">🔑</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-activate" id="activateBtn">
+                    Activate Account
+                </button>
+            </form>
+
+            <div class="resend-section">
+                <div class="resend-text">
+                    Didn't receive the code?
+                </div>
+                <button type="button" class="btn-resend" onclick="resendActivationEmail()" id="resendBtn">
+                    Resend Activation Email
+                </button>
+                <div id="resendMessage" style="margin-top: 10px; font-size: 12px;"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+        // Get email from URL
+        function getEmailFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('email') || '';
+        }
+
+        // Format activation code as XXXX-XXXX-XXXX
+        function formatActivationCode(input) {
+            let value = input.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+            
+            // Limit to 12 characters
+            if (value.length > 12) {
+                value = value.substring(0, 12);
+            }
+            
+            // Add dashes after every 4 characters
+            let formatted = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formatted += '-';
+                }
+                formatted += value[i];
+            }
+            
+            input.value = formatted;
+            
+            // Update paste area style
+            const pasteArea = document.getElementById('pasteArea');
+            if (value.length === 12) {
+                pasteArea.classList.add('active');
+                pasteArea.innerHTML = `
+                    <div style="color: #00FF9D; font-size: 20px;">✓</div>
+                    <div class="paste-text" style="color: #00FF9D;">Code ready to activate!</div>
+                    <div class="auto-format">${formatted}</div>
+                `;
+            } else if (value.length > 0) {
+                pasteArea.classList.add('active');
+                pasteArea.innerHTML = `
+                    <div class="paste-icon">✏️</div>
+                    <div class="paste-text">Entering code... ${value.length}/12</div>
+                    <div class="auto-format">${formatted}</div>
+                `;
+            } else {
+                pasteArea.classList.remove('active');
+                pasteArea.innerHTML = `
+                    <div class="paste-icon">📋</div>
+                    <div class="paste-text">Click here or paste your activation code</div>
+                    <div class="auto-format">Auto-formats to: XXXX-XXXX-XXXX</div>
+                `;
+            }
+        }
+
+        // Focus on code input
+        function focusCodeInput() {
+            document.getElementById('activationCode').focus();
+        }
+
+        // Paste from clipboard
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                const codeInput = document.getElementById('activationCode');
+                
+                // Clean the text: remove spaces, make uppercase
+                let cleanText = text.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+                
+                // Check if it looks like a 12-character code
+                if (cleanText.length === 12 && /^[A-Z0-9]+$/.test(cleanText)) {
+                    // Format and set the value
+                    let formatted = '';
+                    for (let i = 0; i < cleanText.length; i++) {
+                        if (i > 0 && i % 4 === 0) {
+                            formatted += '-';
+                        }
+                        formatted += cleanText[i];
+                    }
+                    
+                    codeInput.value = formatted;
+                    showNotification('✅ Code pasted successfully!');
+                    
+                    // Update paste area
+                    formatActivationCode(codeInput);
+                    
+                    // Auto-focus and select
+                    setTimeout(() => {
+                        codeInput.focus();
+                        codeInput.select();
+                    }, 100);
+                } else {
+                    showMessage('The copied text doesn\'t look like a valid 12-character code.', 'error');
+                }
+            } catch (err) {
+                console.error('Failed to read clipboard:', err);
+                showMessage('Unable to access clipboard. Please paste manually.', 'error');
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('copyNotification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Show message
+        function showMessage(message, type = 'info', containerId = 'messageContainer') {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="message-box message-${type}">
+                    ${message}
+                </div>
+            `;
+            
+            // Scroll to message
+            container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Auto-hide success/info messages after 5 seconds
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    container.innerHTML = '';
+                }, 5000);
+            }
+        }
+
+        // Handle activation form submission
+        async function handleActivation(event) {
+            event.preventDefault();
+            
+            let activationCode = document.getElementById('activationCode').value.trim().toUpperCase();
+            
+            // Remove dashes for validation
+            activationCode = activationCode.replace(/-/g, '');
+            
+            if (!activationCode) {
+                showMessage('Please enter an activation code', 'error');
+                return;
+            }
+            
+            // Validate code format: 12 alphanumeric characters
+            if (activationCode.length !== 12) {
+                showMessage('Activation code must be exactly 12 characters.', 'error');
+                return;
+            }
+            
+            if (!/^[A-Z0-9]{12}$/.test(activationCode)) {
+                showMessage('Invalid activation code format. Use only letters A-Z and numbers 0-9.', 'error');
+                return;
+            }
+            
+            // Disable button and show loading
+            const btn = document.getElementById('activateBtn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Activating...';
+            btn.disabled = true;
+            
+            try {
+                // Create form data
+                const formData = new FormData();
+                formData.append('activation_code', activationCode);
+                formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+                
+                // Send request to backend
+                const response = await fetch('/activate/', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.redirected) {
+                    // If redirected to success page
+                    window.location.href = response.url;
+                } else {
+                    // Parse HTML response for error messages
+                    const html = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const errorMessages = doc.querySelectorAll('.message-error');
+                    
+                    if (errorMessages.length > 0) {
+                        showMessage(errorMessages[0].textContent, 'error');
+                    } else {
+                        showMessage('Invalid activation code. Please check and try again.', 'error');
+                    }
+                }
+            } catch (error) {
+                showMessage('Network error. Please check your connection and try again.', 'error');
+                console.error('Error:', error);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // Resend activation email
+        async function resendActivationEmail() {
+            const email = getEmailFromURL();
+            
+            if (!email) {
+                showMessage('Email not found. Please sign up again.', 'error', 'resendMessage');
+                return;
+            }
+            
+            const btn = document.getElementById('resendBtn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('/activate/resend/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(data.message, 'success', 'resendMessage');
+                    if (data.already_sent) {
+                        btn.disabled = true;
+                        btn.textContent = 'Already Sent';
+                    }
+                } else {
+                    showMessage(data.message, 'error', 'resendMessage');
+                }
+            } catch (error) {
+                showMessage('Network error. Please try again.', 'error', 'resendMessage');
+                console.error('Error:', error);
+            } finally {
+                if (btn.textContent !== 'Already Sent') {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        // Get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update email display
+            const email = getEmailFromURL();
+            if (email) {
+                const emailDisplay = document.getElementById('activationEmail');
+                emailDisplay.textContent = `Enter the activation code sent to ${email}`;
+            }
+            
+            // Auto-focus activation code input
+            const codeInput = document.getElementById('activationCode');
+            if (codeInput) {
+                setTimeout(() => {
+                    codeInput.focus();
+                }, 300);
+                
+                // Handle paste events
+                codeInput.addEventListener('paste', function(e) {
+                    setTimeout(() => {
+                        formatActivationCode(this);
+                        showNotification('✅ Code pasted!');
+                    }, 100);
+                });
+            }
+            
+            // Handle drag and drop for paste area
+            const pasteArea = document.getElementById('pasteArea');
+            pasteArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('active');
+            });
+            
+            pasteArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('active');
+                
+                // Get dropped text
+                const text = e.dataTransfer.getData('text');
+                if (text) {
+                    codeInput.value = text;
+                    formatActivationCode(codeInput);
+                    showNotification('✅ Code dropped!');
+                }
+            });
+            
+            // Show welcome message if email is in URL
+            if (email) {
+                showMessage(`Activation code sent to ${email}. Please check your inbox.`, 'info');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activated - TiDav</title>
+    <style>
+        /* Your existing activation success CSS */
+        /* ... */
+    </style>
+</head>
+<body>
+    <!-- Your existing animated background -->
+    
+    <div class="activation-wrapper">
+        <div class="activation-card">
+            <div class="logo-section">
+                <div class="logo">📱</div>
+                <div class="logo-text">TiDav</div>
+                <div class="logo-subtitle">Premium Numbers</div>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 80px; margin-bottom: 20px;">🎉</div>
+                <h2 style="color: #fff; margin-bottom: 15px;">Account Successfully Activated!</h2>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 30px;">
+                    Welcome to TiDav! Your account is now active and ready to use.
+                </p>
+                
+                <div style="background: rgba(0, 255, 157, 0.1); border: 1px solid rgba(0, 255, 157, 0.3); 
+                          border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <p style="color: #00FF9D; font-weight: bold;">You are now logged in.</p>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">
+                        Redirecting to dashboard in <span id="countdown">5</span> seconds...
+                    </p>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <button onclick="redirectToDashboard()" class="btn-activate">
+                        Go to Dashboard Now
+                    </button>
+                    <p style="margin-top: 15px;">
+                        <a href="/login/" style="color: #00B8FF; text-decoration: none;">
+                            Or go to login page
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown and redirect
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                redirectToDashboard();
+            }
+        }, 1000);
+        
+        function redirectToDashboard() {
+            window.location.href = '/dashboard/';  // Change to your actual dashboard URL
+        }
+    </script>
+</body>
+</html>

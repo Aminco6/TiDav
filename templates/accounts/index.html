@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TwilioHub - Premium Virtual Numbers</title>
+
+    <!-- Combined CSS Styles -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0A1F2E;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        .bg-grid {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 157, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 157, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Top App Bar - UPDATED with Menu Button */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 35, 50, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 32px;
+        }
+
+        .app-name {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-icon {
+            position: relative;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .notification-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #FF006B;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .wallet-display {
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            padding: 10px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: #0A1F2E;
+            box-shadow: 0 4px 15px rgba(0, 255, 157, 0.3);
+        }
+
+        .wallet-amount {
+            font-size: 20px;
+        }
+
+        .btn-add-funds {
+            background: rgba(0, 255, 157, 0.1);
+            border: 2px solid #00FF9D;
+            color: #00FF9D;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-add-funds:hover {
+            background: #00FF9D;
+            color: #0A1F2E;
+            transform: translateY(-2px);
+        }
+
+        .profile-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: background 0.3s;
+        }
+
+        .profile-menu:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* Mobile Menu Button */
+        .menu-button {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+
+        .menu-button span {
+            width: 100%;
+            height: 3px;
+            background: #00FF9D;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-button.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 31, 46, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            text-align: center;
+        }
+
+        .mobile-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 600;
+            padding: 15px 40px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background: rgba(0, 255, 157, 0.1);
+            border: 2px solid transparent;
+        }
+
+        .mobile-nav a:hover {
+            background: rgba(0, 255, 157, 0.2);
+            border-color: #00FF9D;
+            transform: translateY(-5px);
+        }
+
+        .mobile-nav a.active {
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            color: #0A1F2E;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #00FF9D;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(135deg, rgba(255, 0, 107, 0.2) 0%, rgba(128, 0, 255, 0.2) 100%);
+            border: 2px solid #FF006B;
+            border-radius: 16px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 107, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 107, 0.6); }
+        }
+
+        .alert-icon {
+            font-size: 28px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #FF006B;
+        }
+
+        .alert-message {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Wallet Summary */
+        .wallet-summary {
+            background: rgba(15, 35, 50, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .wallet-stat {
+            text-align: center;
+        }
+
+        .wallet-stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .wallet-stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .wallet-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-wallet {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 255, 157, 0.3);
+            background: rgba(0, 255, 157, 0.1);
+            color: #00FF9D;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-wallet:hover {
+            background: #00FF9D;
+            color: #0A1F2E;
+            transform: translateY(-2px);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .action-card {
+            background: rgba(15, 35, 50, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 157, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .action-card:hover {
+            border-color: #00FF9D;
+            background: rgba(0, 255, 157, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.3);
+        }
+
+        .action-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .action-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Section Card */
+        .section-card {
+            background: rgba(15, 35, 50, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-action {
+            color: #00FF9D;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .section-action:hover {
+            color: #00B8FF;
+        }
+
+        /* Number Card */
+        .number-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 157, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .number-card:hover {
+            background: rgba(0, 255, 157, 0.05);
+            border-color: #00FF9D;
+        }
+
+        .number-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .number-value {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: rgba(0, 255, 157, 0.2);
+            color: #00FF9D;
+        }
+
+        .status-expiring {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+        }
+
+        .number-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .detail-item {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .number-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            background: rgba(0, 255, 157, 0.05);
+            color: #00FF9D;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-small:hover {
+            background: #00FF9D;
+            color: #0A1F2E;
+        }
+
+        /* SMS/Call Items */
+        .message-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid #00FF9D;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .sender {
+            font-weight: 700;
+            color: #00FF9D;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .message-content {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .otp-highlight {
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            color: #0A1F2E;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .btn-copy-otp {
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid #00FF9D;
+            color: #00FF9D;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-copy-otp:hover {
+            background: #00FF9D;
+            color: #0A1F2E;
+        }
+
+        /* Usage Charts */
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .usage-stat {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .usage-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .usage-value {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .usage-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+        }
+
+        /* Filter Section */
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: #00FF9D;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Capability Icons */
+        .capabilities {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .capability-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(0, 184, 255, 0.2);
+            color: #00B8FF;
+        }
+
+        /* Footer Styles */
+        .tidav-footer {
+            position: relative;
+            background: rgba(10, 31, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 255, 157, 0.2);
+            margin-top: 50px;
+            padding: 40px 20px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Main Footer */
+        .footer-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-logo {
+            font-size: 40px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .footer-brand-text h3 {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        
+        .footer-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .footer-tagline {
+            flex: 2;
+            min-width: 300px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-global {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .global-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 8px 15px;
+            background: rgba(0, 255, 157, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            font-size: 13px;
+        }
+        
+        .global-icon {
+            font-size: 18px;
+        }
+        
+        /* Quick Links */
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-column h4 {
+            color: #00FF9D;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-column a:hover {
+            color: #00FF9D;
+            transform: translateX(5px);
+        }
+        
+        .footer-column a:hover::before {
+            content: '→';
+            opacity: 1;
+        }
+        
+        /* Global Presence */
+        .footer-global-presence {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+        }
+        
+        .footer-global-presence h4 {
+            color: #00B8FF;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .country-flags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 24px;
+        }
+        
+        .country-flags span {
+            transition: all 0.3s;
+            cursor: pointer;
+            filter: grayscale(0.3);
+        }
+        
+        .country-flags span:hover {
+            transform: scale(1.3);
+            filter: grayscale(0);
+        }
+        
+        /* Footer Bottom */
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-copyright {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .footer-copyright p {
+            margin: 5px 0;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .footer-slogan {
+            color: rgba(0, 184, 255, 0.7) !important;
+            font-style: italic;
+            font-size: 12px !important;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .social-link:hover {
+            background: linear-gradient(135deg, #00FF9D 0%, #00B8FF 100%);
+            color: #0A1F2E;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+        }
+        
+        .footer-legal {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        
+        .footer-legal a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+        
+        .footer-legal a:hover {
+            color: #00FF9D;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wallet-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 12px 15px;
+            }
+
+            .app-name {
+                display: none;
+            }
+
+            .menu-button {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: none;
+            }
+
+            .top-bar-right {
+                gap: 10px;
+            }
+
+            .wallet-display {
+                padding: 8px 12px;
+            }
+
+            .wallet-amount {
+                font-size: 16px;
+            }
+
+            .btn-add-funds span {
+                display: none;
+            }
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .wallet-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .usage-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .number-details {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+            }
+
+            .wallet-actions {
+                flex-direction: column;
+            }
+            
+            .footer-main {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .footer-legal {
+                justify-content: center;
+            }
+            
+            .footer-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
+            
+            .country-flags {
+                font-size: 18px;
+                gap: 8px;
+            }
+            
+            .number-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .number-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <button class="close-menu" onclick="toggleMenu()">✕</button>
+        <div class="mobile-nav">
+            <a href="#dashboard" class="active" onclick="navigateTo('dashboard')">📊 Dashboard</a>
+            <a href="#numbers" onclick="navigateTo('numbers')">📱 My Numbers</a>
+            <a href="#buy" onclick="navigateTo('buy')">🛒 Buy Numbers</a>
+            <a href="#sms" onclick="navigateTo('sms')">💬 SMS Inbox</a>
+            <a href="#calls" onclick="navigateTo('calls')">📞 Call Logs</a>
+            <a href="#wallet" onclick="navigateTo('wallet')">💰 Wallet</a>
+            <a href="#settings" onclick="navigateTo('settings')">⚙️ Settings</a>
+            <a href="#help" onclick="navigateTo('help')">❓ Help & Support</a>
+        </div>
+    </div>
+
+    <!-- Top App Bar -->
+    <div class="top-bar">
+        <div class="logo-section">
+            <button class="menu-button" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo">📱</div>
+            <div class="app-name">TwilioHub</div>
+        </div>
+        
+        <div class="top-bar-right">
+            <div class="notification-icon" onclick="showNotifications()">
+                🔔
+                <span class="notification-badge">3</span>
+            </div>
+            
+            <div class="wallet-display">
+                <span>💰</span>
+                <span class="wallet-amount">$<span id="walletBalance">250.00</span></span>
+            </div>
+            
+            <button class="btn-add-funds" onclick="openAddFunds()">
+                <span>➕</span>
+                <span>Add Funds</span>
+            </button>
+            
+            <div class="profile-menu" onclick="toggleProfileMenu()">
+                <div class="avatar">👤</div>
+                <span style="font-weight: 600;">John D.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Alert Banner -->
+        <div class="alert-banner">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-content">
+                <div class="alert-title">Low Wallet Balance</div>
+                <div class="alert-message">Add funds to avoid service interruption.</div>
+            </div>
+            <button class="btn-wallet" onclick="openAddFunds()">Add Funds</button>
+        </div>
+
+        <!-- Wallet Summary -->
+        <div class="wallet-summary">
+            <div class="wallet-grid">
+                <div class="wallet-stat">
+                    <div class="wallet-stat-label">Current Balance</div>
+                    <div class="wallet-stat-value">$250.00</div>
+                </div>
+                <div class="wallet-stat">
+                    <div class="wallet-stat-label">Pending Charges</div>
+                    <div class="wallet-stat-value">$45.00</div>
+                </div>
+                <div class="wallet-stat">
+                    <div class="wallet-stat-label">Auto-Renew</div>
+                    <div class="wallet-stat-value">ON</div>
+                </div>
+                <div class="wallet-stat">
+                    <div class="wallet-stat-label">Total Spent</div>
+                    <div class="wallet-stat-value">$1,240</div>
+                </div>
+            </div>
+            
+            <div class="wallet-actions">
+                <button class="btn-wallet" onclick="openAddFunds()">
+                    <span>➕</span> Add Funds
+                </button>
+                <button class="btn-wallet" onclick="viewWalletHistory()">
+                    <span>📜</span> Wallet History
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card" onclick="buyNewNumber()">
+                <div class="action-icon">➕</div>
+                <div class="action-title">Buy New Number</div>
+            </div>
+            <div class="action-card" onclick="viewSMS()">
+                <div class="action-icon">📩</div>
+                <div class="action-title">View SMS Inbox</div>
+            </div>
+            <div class="action-card" onclick="viewCallLogs()">
+                <div class="action-icon">📞</div>
+                <div class="action-title">Call Logs</div>
+            </div>
+            <div class="action-card" onclick="renewNumbers()">
+                <div class="action-icon">🔁</div>
+                <div class="action-title">Renew Numbers</div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <div>
+                <!-- Available Numbers Marketplace -->
+                <div class="section-card" style="margin-bottom: 30px;">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <span>🌍</span> Available Numbers
+                        </div>
+                        <div class="section-action" onclick="viewAllNumbers()">View All →</div>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <input type="text" class="filter-input" placeholder="🔍 Search by country code...">
+                        <select class="filter-select">
+                            <option>All Countries</option>
+                            <option>🇺🇸 United States</option>
+                            <option>🇬🇧 United Kingdom</option>
+                            <option>🇨🇦 Canada</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>All Capabilities</option>
+                            <option>Voice + SMS</option>
+                            <option>SMS Only</option>
+                            <option>Voice Only</option>
+                        </select>
+                    </div>
+                    
+                    <div class="number-card">
+                        <div class="number-header">
+                            <div class="number-value">
+                                <span>🇺🇸</span> +1 (555) 123-4567
+                            </div>
+                            <div style="font-size: 20px; font-weight: 800; color: #00FF9D;">$12.99/mo</div>
+                        </div>
+                        <div class="capabilities">
+                            <span class="capability-badge">📞 Voice</span>
+                            <span class="capability-badge">💬 SMS</span>
+                            <span class="capability-badge">📱 MMS</span>
+                        </div>
+                        <div class="number-details">
+                            <div class="detail-item">
+                                Location
+                                <span class="detail-value">New York, NY</span>
+                            </div>
+                            <div class="detail-item">
+                                Type
+                                <span class="detail-value">Local</span>
+                            </div>
+                            <div class="detail-item">
+                                Setup Fee
+                                <span class="detail-value">$2.00</span>
+                            </div>
+                        </div>
+                        <button class="btn-wallet" onclick="purchaseNumber('+1 (555) 123-4567')">
+                            <span>🛒</span> Buy Now
+                        </button>
+                    </div>
+
+                    <div class="number-card">
+                        <div class="number-header">
+                            <div class="number-value">
+                                <span>🇬🇧</span> +44 20 7946 0958
+                            </div>
+                            <div style="font-size: 20px; font-weight: 800; color: #00FF9D;">$18.99/mo</div>
+                        </div>
+                        <div class="capabilities">
+                            <span class="capability-badge">📞 Voice</span>
+                            <span class="capability-badge">💬 SMS</span>
+                        </div>
+                        <div class="number-details">
+                            <div class="detail-item">
+                                Location
+                                <span class="detail-value">London, UK</span>
+                            </div>
+                            <div class="detail-item">
+                                Type
+                                <span class="detail-value">Local</span>
+                            </div>
+                            <div class="detail-item">
+                                Setup Fee
+                                <span class="detail-value">$3.50</span>
+                            </div>
+                        </div>
+                        <button class="btn-wallet" onclick="purchaseNumber('+44 20 7946 0958')">
+                            <span>🛒</span> Buy Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- My Active Numbers -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <span>📱</span> My Active Numbers (12)
+                        </div>
+                        <div class="section-action" onclick="viewAllMyNumbers()">View All →</div>
+                    </div>
+
+                    <!-- Number Card 1 -->
+                    <div class="number-card">
+                        <div class="number-header">
+                            <div class="number-value">
+                                <span>🇺🇸</span> +1 (415) 789-0123
+                            </div>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+
+                        <div class="number-details">
+                            <div class="detail-item">
+                                Expires
+                                <span class="detail-value">Jan 25, 2026</span>
+                            </div>
+                            <div class="detail-item">
+                                Renewal
+                                <span class="detail-value">$9.99/mo</span>
+                            </div>
+                            <div class="detail-item">
+                                Usage
+                                <span class="detail-value">24 SMS</span>
+                            </div>
+                        </div>
+
+                        <div class="number-actions">
+                            <button class="btn-small" onclick="viewNumberSMS()">📩 SMS</button>
+                            <button class="btn-small" onclick="viewNumberCalls()">📞 Calls</button>
+                            <button class="btn-small" onclick="renewNumber()">🔁 Renew</button>
+                            <button class="btn-small" onclick="releaseNumber()">❌ Release</button>
+                        </div>
+                    </div>
+
+                    <!-- Number Card 2 -->
+                    <div class="number-card">
+                        <div class="number-header">
+                            <div class="number-value">
+                                <span>🇨🇦</span> +1 (604) 555-9876
+                            </div>
+                            <span class="status-badge status-expiring">Expiring Soon</span>
+                        </div>
+
+                        <div class="number-details">
+                            <div class="detail-item">
+                                Expires
+                                <span class="detail-value" style="color:#FFD700;">Jan 18, 2026</span>
+                            </div>
+                            <div class="detail-item">
+                                Renewal
+                                <span class="detail-value">$11.99/mo</span>
+                            </div>
+                            <div class="detail-item">
+                                Usage
+                                <span class="detail-value">8 SMS</span>
+                            </div>
+                        </div>
+
+                        <div class="number-actions">
+                            <button class="btn-small" onclick="viewNumberSMS()">📩 SMS</button>
+                            <button class="btn-small" onclick="viewNumberCalls()">📞 Calls</button>
+                            <button class="btn-small" onclick="renewNumber()">🔁 Renew</button>
+                            <button class="btn-small" onclick="releaseNumber()">❌ Release</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="tidav-footer">
+        <div class="footer-content">
+            <!-- Main Footer Section -->
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo">📱</div>
+                    <div class="footer-brand-text">
+                        <h3>TwilioHub</h3>
+                        <p class="footer-subtitle">Premium Virtual Numbers</p>
+                    </div>
+                </div>
+                
+                <div class="footer-tagline">
+                    <p>🌍 Premium virtual numbers for businesses worldwide with SMS and voice capabilities.</p>
+                </div>
+                
+                <div class="footer-global">
+                    <div class="global-badge">
+                        <span class="global-icon">🌐</span>
+                        <span>Numbers in 50+ countries</span>
+                    </div>
+                    <div class="global-badge">
+                        <span class="global-icon">🚀</span>
+                        <span>24/7 support</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#numbers">Virtual Numbers</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#sms">SMS Service</a></li>
+                        <li><a href="#voice">Voice Calls</a></li>
+                        <li><a href="#mms">MMS Service</a></li>
+                        <li><a href="#api">API Access</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#help">Help Center</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#docs">Documentation</a></li>
+                        <li><a href="#status">System Status</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#legal">Legal</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Global Presence -->
+            <div class="footer-global-presence">
+                <h4>🌐 Global Presence</h4>
+                <div class="country-flags">
+                    <span title="United States">🇺🇸</span>
+                    <span title="United Kingdom">🇬🇧</span>
+                    <span title="Canada">🇨🇦</span>
+                    <span title="Australia">🇦🇺</span>
+                    <span title="Germany">🇩🇪</span>
+                    <span title="France">🇫🇷</span>
+                    <span title="Japan">🇯🇵</span>
+                    <span title="China">🇨🇳</span>
+                    <span title="India">🇮🇳</span>
+                    <span title="Brazil">🇧🇷</span>
+                    <span title="UAE">🇦🇪</span>
+                    <span title="South Africa">🇿🇦</span>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>© 2024 TwilioHub. All rights reserved.</p>
+                    <p class="footer-slogan">Premium virtual numbers for global businesses.</p>
+                </div>
+                
+                <div class="footer-social">
+                    <a href="#" class="social-link" title="Twitter">
+                        <span>🐦</span>
+                    </a>
+                    <a href="#" class="social-link" title="LinkedIn">
+                        <span>💼</span>
+                    </a>
+                    <a href="#" class="social-link" title="Instagram">
+                        <span>📸</span>
+                    </a>
+                    <a href="#" class="social-link" title="YouTube">
+                        <span>🎥</span>
+                    </a>
+                </div>
+                
+                <div class="footer-legal">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#cookies">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const button = document.querySelector('.menu-button');
+            
+            menu.classList.toggle('active');
+            button.classList.toggle('active');
+            
+            // Prevent scrolling when menu is open
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        // Navigation function
+        function navigateTo(page) {
+            alert(`Navigating to ${page} page...`);
+            toggleMenu(); // Close menu after navigation
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            const menu = document.getElementById('mobileMenu');
+            const button = document.querySelector('.menu-button');
+            
+            if (menu.classList.contains('active') && 
+                !menu.contains(event.target) && 
+                !button.contains(event.target)) {
+                toggleMenu();
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                const menu = document.getElementById('mobileMenu');
+                if (menu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            }
+        });
+
+        // Existing functions
+        function showNotifications() {
+            alert('📢 You have 3 new notifications');
+        }
+
+        function openAddFunds() {
+            alert('💰 Opening add funds modal...');
+        }
+
+        function toggleProfileMenu() {
+            alert('👤 Opening profile menu...');
+        }
+
+        function viewWalletHistory() {
+            alert('📜 Opening wallet history...');
+        }
+
+        function buyNewNumber() {
+            alert('➕ Opening number marketplace...');
+        }
+
+        function viewSMS() {
+            alert('📩 Opening SMS inbox...');
+        }
+
+        function viewCallLogs() {
+            alert('📞 Opening call logs...');
+        }
+
+        function renewNumbers() {
+            alert('🔁 Opening renewal page...');
+        }
+
+        function viewAllNumbers() {
+            alert('🌍 Viewing all available numbers...');
+        }
+
+        function purchaseNumber(number) {
+            alert(`🛒 Purchasing number: ${number}`);
+        }
+
+        function viewNumberSMS() {
+            alert('📩 Viewing SMS for this number...');
+        }
+
+        function viewNumberCalls() {
+            alert('📞 Viewing calls for this number...');
+        }
+
+        function renewNumber() {
+            alert('🔁 Renewing this number...');
+        }
+
+        function releaseNumber() {
+            const confirmed = confirm('❌ Are you sure you want to release this number?');
+            if (confirmed) {
+                alert('Number released successfully.');
+            }
+        }
+
+        function viewAllMyNumbers() {
+            alert('📱 Viewing all your numbers...');
+        }
+
+        // Animated stats counter for footer
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to country flags
+            const countryFlags = document.querySelectorAll('.country-flags span');
+            countryFlags.forEach(flag => {
+                flag.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.3)';
+                    this.style.filter = 'grayscale(0)';
+                });
+                
+                flag.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.filter = 'grayscale(0.3)';
+                });
+            });
+            
+            // Add click effects to social links
+            const socialLinks = document.querySelectorAll('.social-link');
+            socialLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.getAttribute('title');
+                    alert(`🚀 ${platform} integration coming soon!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
