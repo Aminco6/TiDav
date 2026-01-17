@@ -19,7 +19,7 @@ from django.template.loader import render_to_string
 
 
 
-@login_required(login_url='/login/')
+#@login_required(login_url='/login/')
 def index(request):
   return render(request, 'accounts/index.html')
 

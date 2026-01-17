@@ -15,10 +15,10 @@ SECRET_KEY = 'django-insecure-ti-dav-secret-key-2024-change-this-in-production'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "tidav.artclash.com.ng",   # your real domain
+    "tidav.artclash.com.ng",  # your real domain
     "www.tidav.artclash.com.ng",
-    "127.0.0.1",               # allow local testing via curl/Daphne
-    "localhost",               # optional
+    "127.0.0.1",              # optional, for local testing
+    "localhost",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
