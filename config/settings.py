@@ -17,9 +17,15 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "tidav.artclash.com.ng",
     "www.tidav.artclash.com.ng",
-    "127.0.0.1",
-    "localhost",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://tidav.artclash.com.ng",
+    "https://www.tidav.artclash.com.ng",
+]
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
 
 # Application definition
 INSTALLED_APPS = [
@@ -131,20 +137,10 @@ LOGIN_URL = '/login/'
 # Activation settings
 ACTIVATION_EXPIRE_DAYS = 7
 
-# CSRF settings
-CSRF_TRUSTED_ORIGINS = [
-    "https://tidav.artclash.com.ng",
-    "https://www.tidav.artclash.com.ng",
-]
 
 # Session settings
 SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
 SESSION_SAVE_EVERY_REQUEST = True
-
-
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-USE_X_FORWARDED_HOST = True
-
 
 
 
