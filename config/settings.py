@@ -34,7 +34,7 @@ USE_X_FORWARDED_HOST = True
 # Application definition
 INSTALLED_APPS = [
     # Custom apps first
-    #'accounts.apps.AccountsConfig',  # Important: Put this before django.contrib.auth
+    'accounts.apps.AccountsConfig',  # Important: Put this before django.contrib.auth
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-   # 'UserDashboard'
+    'UserDashboard'
      
     # Django Allauth
    # 'django.contrib.sites',
@@ -85,6 +85,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
+
 
 # Database
 DATABASES = {
