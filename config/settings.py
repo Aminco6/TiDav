@@ -14,11 +14,13 @@ SECRET_KEY = 'django-insecure-ti-dav-secret-key-2024-change-this-in-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+DEBUG = False
+
 ALLOWED_HOSTS = [
-    "tidav.artclash.com.ng",  # your real domain
-    "www.tidav.artclash.com.ng",
-    "127.0.0.1",              # optional, for local testing
-    "localhost",
+    'tidav.artclash.com.ng',
+    'www.tidav.artclash.com.ng',
+    '127.0.0.1',
+    'localhost',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -32,7 +34,7 @@ USE_X_FORWARDED_HOST = True
 # Application definition
 INSTALLED_APPS = [
     # Custom apps first
-    'accounts.apps.AccountsConfig',  # Important: Put this before django.contrib.auth
+    #'accounts.apps.AccountsConfig',  # Important: Put this before django.contrib.auth
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-    'UserDashboard'
+   # 'UserDashboard'
      
     # Django Allauth
    # 'django.contrib.sites',
@@ -117,10 +119,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files
 MEDIA_URL = '/media/'
@@ -130,11 +130,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'noreply@tidav.com'
 
+
+
+"""
 # Authentication settings
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
+"""
+
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'
+
+
 
 # Activation settings
 ACTIVATION_EXPIRE_DAYS = 7
